@@ -2,6 +2,17 @@ name: Flowable Main Build
 
 on: [push, pull_request]
 
+permissions:
+  # Allows the EndBug/add-and-commit step to commit the package manager changes,
+  # adding the AppMap language library and configuration file appmap.yml.
+  # Once the EndBug/add-and-commit is removed, this permission can be removed, 
+  # unless you need it for other reasons.
+  contents: write
+
+  # Allows the getappmap/archive-action to write a PR comment with the 
+  # AppMap configuration status.
+  pull-requests: write
+
 env:
   MAVEN_ARGS: >-
     -B -V --no-transfer-progress
