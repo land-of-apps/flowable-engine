@@ -1,0 +1,4 @@
+language: java
+appmap_dir: tmp/appmap
+packages:
+  - path: org.flowable.engine
