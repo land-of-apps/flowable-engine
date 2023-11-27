@@ -58,6 +58,7 @@ jobs:
       run: ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false
     # Begin AppMap bootstrap archive step
     - name: List AppMaps
+      if: always()
       run: find . -name '*.appmap.json' | sort
     - name: Archive AppMaps
       id: appmap-bootstrap-archive-appmaps
