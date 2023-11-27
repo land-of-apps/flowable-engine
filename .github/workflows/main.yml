@@ -34,6 +34,15 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.java }}
+    - name: Install AppMap tools
+      id: install-appmap
+      uses: getappmap/install-action@v1
+      with:
+        project-type: maven
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "ci: Add AppMap language agent and appmap.yml"
     - name: Cache Maven Repository
       uses: actions/cache@v3
       with:
