@@ -1,7 +1,7 @@
 language: java
 appmap_dir: tmp/appmap
 packages:
-  - path: org.flowable.engine
+  - path: org.flowable
     exclude:
       - org.activiti.engine.test
       - org.activiti.engine.test.api
