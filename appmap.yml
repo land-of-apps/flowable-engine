@@ -3,6 +3,12 @@ appmap_dir: tmp/appmap
 packages:
   - path: org.flowable
     exclude:
+      # Disable high-volume functions as reported by 
+      # https://github.com/land-of-apps/flowable-engine/pull/1#issuecomment-1836337141
+      - org.flowable.common.engine.impl.context.Context.getStack
+      - org.flowable.dmn.xml.converter.DelegatingXMLStreamWriter#writeCharacters
+      - org.flowable.common.engine.impl.interceptor.CommandContext#getSession
+      # Instrumentation was failing in some test code, and test code does not need to be instrumented anyway.
       - org.activiti.engine.test
       - org.activiti.engine.test.api
       - org.activiti.engine.test.api.event
