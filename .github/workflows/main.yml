@@ -56,27 +56,16 @@ jobs:
       run: ./mvnw install ${MAVEN_ARGS} -DskipTests=true -Dmaven.javadoc.skip=true
     - name: Test
       run: ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false
-    # Begin AppMap bootstrap archive step
-    # - name: List AppMaps
-    #   if: always()
-    #   run: find . -name '*.appmap.json' | sort
+    # rsync AppMaps from all recursive tmp/appmap folders into ./tmp/appmap
+    - name: Collect AppMaps
+      if: always()
+      run: |
+        mkdir -p tmp/appmap
+        find . -name '*.appmap.json' -exec rsync -R {} tmp/appmap \;
     - name: Archive AppMaps
       if: always()
       uses: getappmap/archive-action@v1
       with:
-        directory: modules/flowable-cmmn-rest
-        revision: ${{ github.event.pull_request.base.sha }}_flowable-cmmn-rest
-    - name: Archive AppMaps
-      if: always()
-      uses: getappmap/archive-action@v1
-      with:
-        directory: modules/flowable-dmn-rest
-        revision: ${{ github.event.pull_request.base.sha }}_flowable-dmn-rest
-    - name: Archive AppMaps
-      if: always()
-      uses: getappmap/archive-action@v1
-      with:
-        directory: modules/flowable-event-registry-rest
-        revision: ${{ github.event.pull_request.base.sha }}_flowable-event-registry-rest
+        revision: ${{ github.event.pull_request.base.sha }}
     # End AppMap bootstrap archive step
     # Edit to try and trigger Workflow
