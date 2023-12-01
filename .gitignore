@@ -19,3 +19,5 @@ requirements.lock
 docs/docusaurus/website/build/
 k8s/index.yaml
 /k8s/*.tgz
+tmp/
+
