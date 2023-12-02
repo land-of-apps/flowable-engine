@@ -55,7 +55,8 @@ jobs:
       # Need to do install first in order for the OSGi tests to work
       run: ./mvnw install ${MAVEN_ARGS} -DskipTests=true -Dmaven.javadoc.skip=true
     - name: Test
-      run: ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false
+      run: |
+        ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false -am -pl modules/flowable-dmn-engine -Dtest=FlowableDmnJupiterCustomResourceTest
     # rsync AppMaps from all recursive tmp/appmap folders into ./tmp/appmap
     - name: Collect AppMaps
       if: always()

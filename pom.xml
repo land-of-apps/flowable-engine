@@ -88,7 +88,12 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
+      <!-- <dependency>
+        <groupId>com.appland</groupId>
+        <artifactId>appmap-agent</artifactId>
+        <version>1.24.1</version>
+      </dependency> -->
+      <dependency>
 				<groupId>org.flowable</groupId>
 				<artifactId>flowable-bom</artifactId>
 				<version>${project.version}</version>
@@ -100,7 +105,7 @@
 				<artifactId>h2</artifactId>
 				<version>2.1.214</version>
 			</dependency>
-			<!-- Logging -->
+      <!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -253,7 +258,7 @@
 				<artifactId>jcc</artifactId>
 				<version>11.5.9.0</version>
 			</dependency>
-			<!-- Web service -->
+      <!-- Web service -->
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-bom</artifactId>
@@ -433,7 +438,7 @@
 				<artifactId>artemis-jakarta-server</artifactId>
 				<version>${artemis.version}</version>
 			</dependency>
-			<!-- Camel integration -->
+      <!-- Camel integration -->
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-bom</artifactId>
@@ -554,6 +559,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
+          <!-- <argLine>-javaagent:/Users/ajp/.appmap/lib/java/appmap.jar @{argLine}</argLine> -->
 					<failIfNoTests>false</failIfNoTests>
 					<trimStackTrace>false</trimStackTrace>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -595,7 +601,7 @@
 					</versions>
 				</configuration>
 			</plugin>
-			<plugin>
+      <plugin>
 				<groupId>com.appland</groupId>
 				<artifactId>appmap-maven-plugin</artifactId>
 				<version>1.3.0</version>
@@ -664,7 +670,7 @@
 						</archive>
 					</configuration>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings
+        <!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -713,7 +719,7 @@
 							</goals>
 							<configuration>
 								<mainClass>${start-class}</mainClass>
-								<!-- The generated Spring Boot jar / war should not be made executable be prepending a launch script to the jar / war
+                <!-- The generated Spring Boot jar / war should not be made executable be prepending a launch script to the jar / war
 								Such jars cause issues when being unpacked by maven dependency:unpack, it can also cause issues when deploying in a servlet container.
 								NB: The jar / war is still self contained and can be run with java -jar
 								-->
