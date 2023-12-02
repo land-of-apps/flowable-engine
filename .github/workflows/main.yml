@@ -56,6 +56,7 @@ jobs:
       run: ./mvnw install ${MAVEN_ARGS} -DskipTests=true -Dmaven.javadoc.skip=true
     - name: Test
       run: |
+        ./mvnw dependency:get -Dartifact=com.appland:appmap-agent:1.24.1
         ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false -am -pl modules/flowable-dmn-engine -Dtest=FlowableDmnJupiterCustomResourceTest
     # rsync AppMaps from all recursive tmp/appmap folders into ./tmp/appmap
     - name: Collect AppMaps

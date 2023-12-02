@@ -88,11 +88,11 @@
 
 	<dependencyManagement>
 		<dependencies>
-      <!-- <dependency>
+      <dependency>
         <groupId>com.appland</groupId>
         <artifactId>appmap-agent</artifactId>
         <version>1.24.1</version>
-      </dependency> -->
+      </dependency>
       <dependency>
 				<groupId>org.flowable</groupId>
 				<artifactId>flowable-bom</artifactId>
@@ -559,7 +559,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
-          <!-- <argLine>-javaagent:/Users/ajp/.appmap/lib/java/appmap.jar @{argLine}</argLine> -->
+          <argLine>-javaagent:/home/runner/.m2/repository/com/appland/appmap-agent/1.24.1/appmap-agent-1.24.1.jar
+            @{argLine}</argLine>
 					<failIfNoTests>false</failIfNoTests>
 					<trimStackTrace>false</trimStackTrace>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -601,7 +602,7 @@
 					</versions>
 				</configuration>
 			</plugin>
-      <plugin>
+      <!-- <plugin>
 				<groupId>com.appland</groupId>
 				<artifactId>appmap-maven-plugin</artifactId>
 				<version>1.3.0</version>
@@ -613,7 +614,7 @@
 						</goals>
 					</execution>
 				</executions>
-      </plugin>
+      </plugin> -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
