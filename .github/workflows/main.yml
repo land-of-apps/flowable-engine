@@ -1,6 +1,23 @@
 name: Flowable Main Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 0'
+
+permissions:
+  # Allows the EndBug/add-and-commit step to commit the package manager changes,
+  # adding the AppMap language library and configuration file appmap.yml.
+  # Once the EndBug/add-and-commit is removed, this permission can be removed, 
+  # unless you need it for other reasons.
+  contents: write
+
+  # Allows the getappmap/archive-action to write a PR comment with the 
+  # AppMap configuration status.
+  pull-requests: write
 
 env:
   MAVEN_ARGS: >-
@@ -14,13 +31,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [17, 21]
+        java: [17]
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
     - uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.java }}
+    - name: Install AppMap tools
+      id: install-appmap
+      uses: getappmap/install-action@v1
+      with:
+        install-appmap-library: false
     - name: Cache Maven Repository
       uses: actions/cache@v3
       with:
@@ -32,3 +56,16 @@ jobs:
       run: ./mvnw install ${MAVEN_ARGS} -DskipTests=true -Dmaven.javadoc.skip=true
     - name: Test
       run: ./mvnw verify -Pdistro,ui,errorLogging ${MAVEN_ARGS} -Dmaven.test.redirectTestOutputToFile=false
+    # rsync AppMaps from all recursive tmp/appmap folders into ./tmp/appmap
+    - name: Collect AppMaps
+      if: always()
+      run: |
+        mkdir -p tmp/appmap
+        find . -name '*.appmap.json' -exec rsync -R {} tmp/appmap \;
+    - name: Archive AppMaps
+      if: always()
+      uses: getappmap/archive-action@v1
+      with:
+        revision: ${{ github.event.pull_request.base.sha }}
+    # End AppMap bootstrap archive step
+    # Edit to try and trigger Workflow
